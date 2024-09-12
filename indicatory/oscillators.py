@@ -5,6 +5,7 @@ import indicatory.names as names
 
 from polars import DataFrame, Series, col
 from indicatory.means_medians import (
+    simple_moving_average,
     simple_moving_averages,
 )
 
@@ -279,4 +280,18 @@ def stochastic_oscillator(dataframe: DataFrame, window_size: int = 5):
     # Calculate Slow %D (= SMA_N(Slow %K))
     return dataframe.with_columns(
         col(slow_k).rolling_mean(window_size=window_size).alias(slow_d)
+    )
+
+
+def detrend_price_oscillator(
+    dataframe: DataFrame, price_column: str = names.CLOSE, window_size: int = 10
+) -> DataFrame:
+    shift = int(window_size / 2.0) + 1
+    return simple_moving_average(
+        dataframe=dataframe, window_size=window_size, column_name=price_column
+    ).with_columns(
+        (
+            col(price_column).shift(shift)
+            - col(names.sma(column_name=price_column, window_size=window_size))
+        ).alias(names.dpo(column_name=price_column, window_size=window_size))
     )

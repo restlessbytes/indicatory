@@ -35,6 +35,7 @@ All examples use AMD stock data for no particular reason.
 * [x] Daily Change / Returns
 * [x] OHLC Average Price (AVG Price)
 * [x] Relative Currency Strength (RSC)
+* [x] Detrended Price Oscillator (DPO)
 
 ### In progress 
 

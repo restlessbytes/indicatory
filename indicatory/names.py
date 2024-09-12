@@ -397,3 +397,9 @@ def pv(column_name: str) -> str:
         Name of the column containing the calculated Price-by-Volume (PV) values.
     """
     return f"PV {column_name}"
+
+
+def dpo(column_name: str, window_size: int) -> str:
+    return _with_column_and_window_size(
+        "DPO", column=column_name, window_size=window_size
+    )

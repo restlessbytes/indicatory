@@ -56,3 +56,15 @@ def lines_plot(
     return dataframe.hvplot.line(
         x="Date", y=value_fields, color=color, grid=True, width=WIDTH, height=height
     )
+
+
+def step_plot(
+    dataframe: DataFrame,
+    value_fields: list[str],
+    is_small: bool = True,
+    color: str | list[str] = "lightblue",
+):
+    height = int(HEIGHT / 3) if is_small else HEIGHT
+    return dataframe.hvplot.step(
+        x="Date", y=value_fields, color=color, grid=True, width=WIDTH, height=height
+    )

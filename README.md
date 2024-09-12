@@ -1,6 +1,6 @@
-# Indicatory
+# Indicatory - a (opinionated) collection of stock indicators :rocket:
 
-The purpose behind this project is to compile a collection of stock indicators, along with related concepts
+The purpose behind this project is to compile a collection of stock indicators, along with related concepts, written in Python + polars.
 
 Additionally, although the focus of this project is on indicators, it also includes functions and entities that aren't strictly indicators such as Candlestick charts, SVN (support vector machines), ARIMA models and also implementations of ideas and sketches that I've come up with on my own.
 
@@ -12,7 +12,7 @@ All examples use AMD stock data for no particular reason.
 
 * I've been keeping an eye on [`polars`](https://docs.pola.rs/) for quite some time now and this project provided me with the perfect opportunity to explore its capabilities (and short-commings?) a bit, especially since stock data are typically structured in "dataframes". 
 * I like playing around with financial (read: stocks) data from time to time; however, I couldn't find a indicator library that met all of my needs.
-* [Just for Fun. No, Really:)](https://justforfunnoreally.dev/) :rocket:
+* [Just for Fun. No, Really](https://justforfunnoreally.dev/) 
 
 ## Indicators
 

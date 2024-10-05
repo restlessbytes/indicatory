@@ -2,6 +2,7 @@
 *.db
 playground.py
 *.config.yaml
+*.svg
 
 # PyCharm
 .idea/

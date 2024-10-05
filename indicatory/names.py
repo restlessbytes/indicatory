@@ -67,6 +67,10 @@ def rcs_close() -> str:
     return "RCS Close"
 
 
+def roc(column: str) -> str:
+    return f"roc {column}"
+
+
 def _with_window_size(name: str, window_size: int) -> str:
     return f"{name} {window_size}"
 

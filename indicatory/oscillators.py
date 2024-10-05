@@ -144,6 +144,7 @@ def _relative_strength_index(
     losses_col: str,
 ) -> DataFrame:
     rs_col = names.rs(window_size=window_size)
+    # TODO Drop 'intermediate' columns?
     return moving_average_gains_and_losses.with_columns(
         # Calculate Relative Strength = (SMA gains) / (SMA losses)
         (col(gains_col) / col(losses_col))
@@ -294,4 +295,11 @@ def detrend_price_oscillator(
             col(price_column).shift(shift)
             - col(names.sma(column_name=price_column, window_size=window_size))
         ).alias(names.dpo(column_name=price_column, window_size=window_size))
+    )
+
+
+def rate_of_change(dataframe: DataFrame, column: str) -> DataFrame:
+    diff_column = names.roc(column)
+    return dataframe.with_columns(
+        (col(column) - col(column).shift(1)).alias(diff_column)
     )

@@ -5,7 +5,7 @@ from indicatory.oscillators import (
     _exponential_moving_average_gains_and_losses,
     relative_strength_index,
     simple_relative_strength_index,
-    detrend_price_oscillator,
+    detrended_price_oscillator,
     rate_of_change,
 )
 
@@ -71,7 +71,7 @@ def test_relative_strength_indices():
 
 def test_detrended_price_oscillator():
     test_data = DataFrame({"A": [1.0, 2.0, 3.0, 4.0, 5.0]})
-    result = detrend_price_oscillator(test_data, price_column="A", window_size=3)
+    result = detrended_price_oscillator(test_data, price_column="A", window_size=3)
     assert tuple(result["DPO 3 A"]) == (None, None, -1.0, -1.0, -1.0)
 
 

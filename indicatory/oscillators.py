@@ -284,9 +284,23 @@ def stochastic_oscillator(dataframe: DataFrame, window_size: int = 5):
     )
 
 
-def detrend_price_oscillator(
+def detrended_price_oscillator(
     dataframe: DataFrame, price_column: str = names.CLOSE, window_size: int = 10
 ) -> DataFrame:
+    """
+    Calculate the Detrended Price Oscillator (DPO) for a given column in a dataframe.
+
+    The DPO is computed as the difference between the simple moving average of the
+    price and the "current price", shifted by a "half the window size plus one" period.
+
+    Args:
+        dataframe: A (polars) DataFrame containing time series data (OHLC + indicators).
+        price_column: The name of the column to calculate DPO on; defaults to 'CLOSE'.
+        window_size: The size of the moving window for calculating averages; defaults to 10 periods.
+
+    Returns:
+        A new (polars) DataFrame with an additional column containing the calculated DPO values.
+    """
     shift = int(window_size / 2.0) + 1
     return simple_moving_average(
         dataframe=dataframe, window_size=window_size, column_name=price_column
@@ -299,6 +313,20 @@ def detrend_price_oscillator(
 
 
 def rate_of_change(dataframe: DataFrame, column: str) -> DataFrame:
+    """
+    Calculate the Rate of Change (ROC) for a given column in a Polars dataframe.
+
+    The ROC is computed as the difference ("change") between the current and
+    previous value in the specified column. It therefore measures the absolute
+    change between two data points, not a relative one.
+
+    Args:
+        dataframe: A (polars) DataFrame containing the time series data.
+        column: The name of the column to calculate ROC on.
+
+    Returns:
+        A new Polars DataFrame with an additional column containing the calculated ROC values.
+    """
     diff_column = names.roc(column)
     return dataframe.with_columns(
         (col(column) - col(column).shift(1)).alias(diff_column)

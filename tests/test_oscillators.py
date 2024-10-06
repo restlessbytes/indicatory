@@ -7,6 +7,7 @@ from indicatory.oscillators import (
     simple_relative_strength_index,
     detrended_price_oscillator,
     rate_of_change,
+    column_difference,
 )
 
 
@@ -79,3 +80,9 @@ def test_rate_of_change():
     test_data = DataFrame({"A": [1.0, 2.0, 3.0, 5.0]})
     result = rate_of_change(dataframe=test_data, column="A")
     assert tuple(result["dA"]) == (None, 1.0, 1.0, 2.0)
+
+
+def test_column_difference():
+    test_data = DataFrame({"A": [1.0, 2.0, 3.0, 5.0], "B": [0.5, 1.0, 3.0, 1.0]})
+    result = column_difference(test_data, "A", "B")
+    assert tuple(result["cdf A-B"]) == (0.5, 1.0, 0.0, 4.0)

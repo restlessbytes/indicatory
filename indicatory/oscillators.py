@@ -284,6 +284,30 @@ def stochastic_oscillator(dataframe: DataFrame, window_size: int = 5):
     )
 
 
+def column_difference(dataframe: DataFrame, column_1: str, column_2: str) -> DataFrame:
+    """
+    Calculate the "Column Difference" (CDF) for two given columns in a dataframe.
+
+    The CDF is simply the result of subtracting the values in column ``column_2`` from
+    the values in column ``column_1``.
+
+    Args:
+        dataframe: A (polars) DataFrame containing time series data (OHLC + indicators).
+        column_1: The name of the column whose values act as *minuends*.
+        column_2: The name of the column whose values act as *subtrahends*.
+
+    Returns:
+        A new (polars) DataFrame with an additional column containing the result of
+        subtracting the values in column ``column_2`` from the values in column
+        ``column_1``.
+    """
+    return dataframe.with_columns(
+        (col(column_1) - col(column_2)).alias(
+            names.cdf(column_1=column_1, column_2=column_2)
+        )
+    )
+
+
 def detrended_price_oscillator(
     dataframe: DataFrame, price_column: str = names.CLOSE, window_size: int = 10
 ) -> DataFrame:

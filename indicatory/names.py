@@ -407,3 +407,7 @@ def dpo(column_name: str, window_size: int) -> str:
     return _with_column_and_window_size(
         "DPO", column=column_name, window_size=window_size
     )
+
+
+def cdf(column_1: str, column_2: str) -> str:
+    return f"cdf {column_1}-{column_2}"

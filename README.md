@@ -36,6 +36,8 @@ All examples use AMD stock data for no particular reason.
 * [x] OHLC Average Price (AVG Price)
 * [x] Relative Currency Strength (RSC)
 * [x] Detrended Price Oscillator (DPO)
+* [x] Rate-of-Change (ROC)
+* [x] Column Difference (CDF)
 
 ### In progress 
 

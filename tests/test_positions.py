@@ -1,6 +1,12 @@
 import pytest
 
-from indicatory.position import Position, check_position_spec
+from indicatory.position import (
+    Position,
+    check_position_spec,
+    calculate_price_spread,
+    calculate_ask_price,
+    calculate_bid_price,
+)
 
 
 ACCOUNT_SIZE = 50_000
@@ -8,6 +14,18 @@ PROPOSITION = 6250.0
 RISK_PER_TRADE = 500.0
 RISK_PERCENTAGE = 0.08
 RISK_PER_TRADE_PERCENT = 0.01
+
+
+def test_price_spreads():
+    ask = 100.0
+    bid = 98.0
+    spread_abs, spread_rel = calculate_price_spread(ask=ask, bid=bid)
+    spread_rel_rounded = round(spread_rel, 4)
+    assert int(spread_abs) == 2
+    assert spread_rel_rounded == 0.0202
+
+    assert calculate_ask_price(bid=bid, spread_percent=spread_rel)
+    assert calculate_bid_price(ask=ask, spread_percent=spread_rel)
 
 
 @pytest.mark.parametrize(

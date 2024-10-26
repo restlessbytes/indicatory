@@ -1,3 +1,5 @@
+import indicatory.names as names
+
 from polars import DataFrame
 from indicatory.oscillators import (
     _moving_gains_and_losses,
@@ -79,7 +81,8 @@ def test_detrended_price_oscillator():
 def test_rate_of_change():
     test_data = DataFrame({"A": [1.0, 2.0, 3.0, 5.0]})
     result = rate_of_change(dataframe=test_data, column="A")
-    assert tuple(result["dA"]) == (None, 1.0, 1.0, 2.0)
+    assert tuple(result[names.roc("A")]) == (None, 1.0, 1.0, 2.0)
+    assert tuple(result[names.roc_pct("A")]) == (None, 100.0, 50.0, 66.66667)
 
 
 def test_column_difference():

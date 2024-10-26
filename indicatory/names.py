@@ -68,7 +68,11 @@ def rcs_close() -> str:
 
 
 def roc(column: str) -> str:
-    return f"roc {column}"
+    return f"ROC {column}"
+
+
+def roc_pct(column: str) -> str:
+    return roc(column) + " (%)"
 
 
 def _with_window_size(name: str, window_size: int) -> str:
@@ -146,6 +150,20 @@ def aad(base_column: str, window_size: int) -> str:
     """
     return _with_column_and_window_size(
         name="AAD", column=base_column, window_size=window_size
+    )
+
+
+def aad_pct(base_column: str, window_size: int) -> str:
+    """
+    Args:
+        base_column: Name of the column used to calculate the average absolute deviation values.
+        window_size: The number of periods to use for calculating average absolute deviation values.
+
+    Returns:
+        Name of the column containing the calculated average absolute deviation (AAD) **as a percentage**.
+    """
+    return _with_column_and_window_size(
+        name="AAD (%)", column=base_column, window_size=window_size
     )
 
 

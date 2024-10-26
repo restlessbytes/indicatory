@@ -349,9 +349,16 @@ def rate_of_change(dataframe: DataFrame, column: str) -> DataFrame:
         column: The name of the column to calculate ROC on.
 
     Returns:
-        A new Polars DataFrame with an additional column containing the calculated ROC values.
+        A new Polars DataFrame with two additional columns containing the calculated
+        ROC values + "ROC as percentage".
     """
-    diff_column = names.roc(column)
-    return dataframe.with_columns(
-        (col(column) - col(column).shift(1)).alias(diff_column)
+    roc_column = names.roc(column)
+    roc_pct_column = names.roc_pct(column)
+    result = dataframe.with_columns(
+        (col(column) - col(column).shift(1)).alias(roc_column)
+    ).with_columns(
+        (((col(column) - col(column).shift(1)) / col(column).shift(1)) * 100.0)
+        .round(5)
+        .alias(roc_pct_column)
     )
+    return result

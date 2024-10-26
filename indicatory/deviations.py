@@ -84,6 +84,22 @@ def mean_absolute_deviation(s: Series) -> float:
     return (numpy.abs(s - s.mean())).sum() / s.count()
 
 
+def mean_absolute_deviation_percent(s: Series) -> float:
+    """
+    Calculates the mean absolute deviation of a Polars Series as a percentage.
+
+    It's calculated as the mean absolute deviation of ``s`` divided by the mean of ``s``
+    (times 100, since it's a percentage).
+
+    Args:
+        s: A Polars Series containing numerical ("OHLC") data.
+
+    Returns:
+        A float representing the mean absolute deviation of the input series as a percentage.
+    """
+    return (mean_absolute_deviation(s) / s.mean()) * 100.0
+
+
 def average_absolute_deviation(
     dataframe: DataFrame, window_size: int = 10, column_name: str = names.CLOSE
 ):
@@ -116,6 +132,12 @@ def average_absolute_deviation(
                 mean_absolute_deviation, window_size=window_size
             )
         ).alias(names.aad(base_column=column_name, window_size=window_size))
+    ).with_columns(
+        (
+            col(column_name).rolling_map(
+                mean_absolute_deviation_percent, window_size=window_size
+            )
+        ).alias(names.aad_pct(base_column=column_name, window_size=window_size))
     )
 
 
